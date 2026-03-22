@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ByCorazonada — Ibiza & Formentera</title>
+  <meta name="description" content="Charters privados en Ibiza y Formentera. Desde el mar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  RESET                                          │
+     └───────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    background: #F7F5F2;
+    color: #1C1C1C;
+    overflow-x: hidden;
+  }
+  img  { display: block; max-width: 100%; }
+  a    { text-decoration: none; color: inherit; }
+  ul   { list-style: none; }
+  button { font-family: inherit; background: none; border: none; cursor: pointer; }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  TOKENS                                         │
+     └───────────────────────────────────────────────── */
+  :root {
+    --navy:  #2F4858;
+    --sand:  #E6D8C3;
+    --bg:    #F7F5F2;
+    --olive: #7A8C7B;
+    --ink:   #1C1C1C;
+    --muted: #9a9189;
+    --rule:  #ddd5c8;
+
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans:  'Inter', system-ui, sans-serif;
+
+    /*  Fuji X100 film simulation
+        — desaturated, lifted shadows, slight warmth   */
+    --film: saturate(0.65) contrast(0.88) brightness(1.06) sepia(0.07);
+  }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  LAYOUT HELPERS                                 │
+     └───────────────────────────────────────────────── */
+  .gut   { padding-left: 56px; padding-right: 56px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+  .gut-n { padding-left: 56px; padding-right: 56px; max-width:  760px; margin-left: auto; margin-right: auto; }
+
+  /* tiny uppercase label */
+  .kicker {
+    font-size: 0.63rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--olive);
+  }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  FADE-IN (used sparingly, only on text)         │
+     └───────────────────────────────────────────────── */
+  .fade {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                transform 0.9s cubic-bezier(0.16,1,0.3,1);
+  }
+  .fade.show           { opacity: 1; transform: none; }
+  .fade[data-delay="1"] { transition-delay: 0.12s; }
+  .fade[data-delay="2"] { transition-delay: 0.24s; }
+  .fade[data-delay="3"] { transition-delay: 0.38s; }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  NAV                                            │
+     └───────────────────────────────────────────────── */
+  .nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 28px 52px;
+    transition: padding 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.solid {
+    padding: 17px 52px;
+    background: rgba(247,245,242,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: var(--rule);
+  }
+
+  /* logo */
+  .nav__mark {
+    display: flex; align-items: center; gap: 11px;
+  }
+  .nav__mark img {
+    width: 27px; height: 27px; object-fit: contain;
+    /* white on dark hero */
+    filter: brightness(0) invert(1);
+    transition: filter 0.4s;
+  }
+  .nav.solid .nav__mark img { filter: none; }
+  .nav__name {
+    font-family: var(--serif);
+    font-size: 1rem; font-style: italic; font-weight: 300;
+    letter-spacing: 0.03em;
+    color: #fff;
+    transition: color 0.4s;
+  }
+  .nav.solid .nav__name { color: var(--navy); }
+
+  /* links (desktop) */
+  .nav__links {
+    display: flex; align-items: center; gap: 32px;
+  }
+  .nav__links a {
+    font-size: 0.67rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    transition: color 0.3s;
+  }
+  .nav.solid .nav__links a { color: var(--muted); }
+  .nav__links a:hover                  { color: #fff; }
+  .nav.solid .nav__links a:hover       { color: var(--ink); }
+
+  /* book link */
+  .nav__book {
+    font-size: 0.67rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 2px;
+    transition: opacity 0.3s, color 0.4s, border-color 0.4s,
+                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav.solid .nav__book { color: var(--navy); border-color: currentColor; }
+  .nav__book:hover { opacity: 0.55; transform: translateY(-1px); }
+
+  /* social icons (nav) */
+  .nav__social {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .nav__social a {
+    display: flex; align-items: center;
+    color: rgba(255,255,255,0.38);
+    transition: color 0.3s, opacity 0.3s;
+  }
+  .nav.solid .nav__social a { color: var(--muted); }
+  .nav__social a:hover { color: rgba(255,255,255,0.78); }
+  .nav.solid .nav__social a:hover { color: var(--ink); }
+  .nav__social svg { width: 15px; height: 15px; display: block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .nav__social a:hover svg { transform: scale(1.2); }
+  @media (max-width: 768px) { .nav__social { display: none; } }
+
+  /* mobile burger */
+  .nav__burger {
+    display: none; flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .nav__burger span {
+    display: block; width: 22px; height: 1px; background: #fff;
+    transition: background 0.4s;
+  }
+  .nav.solid .nav__burger span { background: var(--ink); }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  HERO                                           │
+     └───────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    height: 100svh; min-height: 600px;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    background: var(--navy);
+  }
+
+  /* photo — starts slightly zoomed, relaxes on load */
+  .hero__photo {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 45%;
+    filter: var(--film) brightness(0.78);
+    transform: scale(1.04);
+    transition: transform 14s cubic-bezier(0.0, 0.0, 0.2, 1);
+    will-change: transform;
+  }
+  .hero__photo.loaded { transform: scale(1); }
+  .hero__video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    filter: var(--film) brightness(0.78);
+  }
+
+  /* grain — very light, sits on top of photo */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    pointer-events: none;
+    opacity: 0.2;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  /* bottom gradient — just enough to read text */
+  .hero__vignette {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(20,20,20,0.42) 100%
+    );
+  }
+
+  /* morphing text — centered over hero */
+  .hero-morph {
+    position: absolute; inset: 0; z-index: 4;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .hero-morph__inner {
+    position: relative;
+    width: 100%; max-width: 960px;
+    height: clamp(96px, 13vw, 176px);
+    text-align: center;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(4rem, 9vw, 8rem);
+    color: #fff;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    filter: url(#heroMorphThreshold) blur(0.6px);
+  }
+  .hero-morph__inner span {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    display: inline-block; width: 100%;
+  }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  ABOUT                                          │
+     │  Text-led. One photo alongside. No section tag. │
+     └───────────────────────────────────────────────── */
+  .about {
+    padding: 0 0 64px;
+    background: var(--bg);
+  }
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 56px;
+    align-items: start;
+  }
+  .about__text { padding-top: 8px; }
+  .about__headline {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+    font-weight: 600; letter-spacing: -0.01em;
+    color: var(--navy); line-height: 1.05;
+    margin-bottom: 28px;
+  }
+  .about__body {
+    font-size: 0.9rem; color: var(--muted); line-height: 1.95;
+    max-width: 440px;
+  }
+  .about__body p + p { margin-top: 20px; }
+  .about__aside {
+    font-size: 0.78rem; letter-spacing: 0.06em; color: var(--muted);
+    margin-top: 28px; padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    line-height: 1.7;
+  }
+
+  /* photo */
+  .about__photo {
+    width: 100%; aspect-ratio: 3/4;
+    object-fit: cover; object-position: center 20%;
+    filter: var(--film);
+    /* appears slightly offset downward for visual rhythm */
+    margin-top: 32px;
+    transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .about__photo:hover { transform: scale(1.015); }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  EXPERIENCES — showcase layout                  │
+     └───────────────────────────────────────────────── */
+  .experiences {
+    padding: 64px 0;
+    background: var(--bg);
+  }
+  .experiences__intro { margin-bottom: 40px; }
+  .experiences__headline {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+    font-weight: 600; letter-spacing: -0.01em;
+    color: var(--navy); line-height: 1.0;
+    margin-top: 16px;
+  }
+
+  .exp-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .exp-card { display: block; text-decoration: none; cursor: pointer; }
+  .exp-card__img-wrap {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--navy);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .exp-card:hover .exp-card__img-wrap { transform: translateY(-6px); }
+  .exp-card__img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    filter: none;
+    transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .exp-card__img--default { opacity: 1; z-index: 1; }
+  .exp-card__img--hover   { opacity: 0; z-index: 2; }
+  .exp-card:hover .exp-card__img--hover { opacity: 1; }
+  .exp-card:hover .exp-card__img { transform: scale(1.05); }
+  .exp-card__body { padding: 20px 0 0; }
+  .exp-card__dur {
+    font-family: var(--sans);
+    font-size: 0.58rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--olive); margin-bottom: 10px;
+  }
+  .exp-card__name {
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+    font-weight: 600; letter-spacing: -0.01em;
+    color: var(--navy); line-height: 1.05;
+    margin-bottom: 8px;
+  }
+  .exp-card__sub {
+    font-family: var(--sans);
+    font-size: 0.75rem; color: var(--muted); line-height: 1.65;
+    margin-bottom: 14px;
+  }
+  .exp-card__cta {
+    display: inline-block;
+    font-size: 0.68rem; letter-spacing: 0.1em;
+    color: var(--navy); opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .exp-card:hover .exp-card__cta { opacity: 0.65; transform: translateX(0); }
+  @media (max-width: 900px) {
+    .exp-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .exp-card__img-wrap { aspect-ratio: 4/5; }
+  }
+  @media (max-width: 600px) {
+    .exp-cards { grid-template-columns: 1fr; }
+  }
+  .hero__sub-line {
+    font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.44);
+    margin-top: 8px; line-height: 1.5;
+    position: relative; z-index: 5;
+  }
+  .hero__sub-cta {
+    display: inline-flex; align-items: baseline; gap: 0.25em;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: #fff;
+    text-shadow: 0 2px 18px rgba(0,0,0,0.55);
+    margin-top: 36px;
+    transition: opacity 0.3s ease;
+  }
+  .hero__sub-cta__strong { font-weight: 600; }
+  .hero__sub-cta__light  { font-weight: 300; }
+  .hero__sub-cta__arrow  {
+    display: inline-block;
+    font-weight: 300;
+    font-size: 0.85em;
+    opacity: 0.55;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.35s ease;
+  }
+  .hero__sub-cta:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(255,255,255,0.35); }
+  .hero__sub-cta:hover .hero__sub-cta__arrow { transform: translateX(4px); opacity: 0.9; }
+  .hero__cta-btn {
+    display: inline-block;
+    margin-top: 32px;
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    font-weight: 300; font-style: italic;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.72);
+    background: transparent;
+    border: none; padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative; z-index: 5;
+    transition: opacity 0.3s ease;
+  }
+  .hero__cta-btn:hover {
+    opacity: 0.45;
+  }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  PHOTO BREAK                                    │
+     │  Full-width. Cinematic ratio. Zero text.        │
+     └───────────────────────────────────────────────── */
+  .break {
+    width: 100%;
+    aspect-ratio: 21/8;
+    overflow: hidden;
+  }
+  .break img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 60%;
+    filter: var(--film);
+    display: block;
+    transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .break:hover img { transform: scale(1.02); }
+
+
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  DESTINATIONS                                   │
+     │  Photo strip. Labels printed BELOW each photo.  │
+     │  No overlays. Editorial / contact-sheet feel.   │
+     └───────────────────────────────────────────────── */
+  .destinations {
+    padding: 0 0 64px;
+    background: var(--bg);
+  }
+  .destinations__head {
+    margin-bottom: 32px;
+  }
+  .destinations__title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 600; letter-spacing: -0.01em;
+    color: var(--navy); line-height: 1.0;
+    margin-top: 14px; max-width: 500px;
+  }
+
+  /* editorial 3-image layout — 1 featured full-width + 2 below */
+  .dest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 960px;
+  }
+  .dest-card {
+    position: relative; overflow: hidden;
+    cursor: pointer; border-radius: 2px;
+    text-decoration: none; display: block;
+  }
+  /* featured image spans full width */
+  .dest-card:first-child {
+    grid-column: 1 / -1;
+  }
+  .dest-card:first-child img {
+    height: 460px;
+  }
+  .dest-card:not(:first-child) img {
+    height: 280px;
+  }
+  .dest-card img {
+    width: 100%;
+    object-fit: cover; object-position: center;
+    display: block;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .dest-card:hover img { transform: scale(1.06); }
+  .dest-card__overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(20,28,35,0.72) 0%, rgba(20,28,35,0.04) 52%, transparent 100%);
+    transition: background 0.55s ease;
+  }
+  .dest-card:hover .dest-card__overlay {
+    background: linear-gradient(to top, rgba(20,28,35,0.84) 0%, rgba(20,28,35,0.22) 58%, rgba(20,28,35,0.06) 100%);
+  }
+  .dest-card__label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .dest-card__place {
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.52);
+  }
+  .dest-card__name {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 1.4vw, 1.3rem);
+    font-style: italic; font-weight: 300;
+    color: #fff; line-height: 1.1;
+  }
+  .dest-card__note {
+    font-size: 0.72rem; color: rgba(255,255,255,0.58); line-height: 1.5;
+    margin-top: 3px;
+  }
+  .dest-card__cta {
+    display: inline-block;
+    font-size: 0.64rem; letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.82);
+    margin-top: 12px; opacity: 0;
+    transform: translateY(7px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .dest-card:hover .dest-card__cta { opacity: 1; transform: translateY(0); }
+  @media (max-width: 640px) {
+    .dest-grid { grid-template-columns: 1fr; gap: 10px; }
+    .dest-card:first-child img { height: 300px; }
+    .dest-card:not(:first-child) img { height: 220px; }
+  }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  GALLERY                                        │
+     │  Pure images. No text anywhere. No captions.    │
+     │  Film contact-sheet feel.                       │
+     └───────────────────────────────────────────────── */
+  .gallery {
+    background: var(--bg);
+    padding-top: 80px;
+  }
+  .gallery__intro {
+    margin-bottom: 40px;
+  }
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 240px;
+    gap: 3px;
+  }
+  .gp {
+    overflow: hidden;
+  }
+  .gp img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: var(--film);
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .gp:hover img { transform: scale(1.03); }
+
+  /* size variants */
+  .gp--w2 { grid-column: span 2; }
+  .gp--h2 { grid-row:    span 2; }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  SECTION CTA                                    │
+     └───────────────────────────────────────────────── */
+  .section-cta { text-align: center; margin-top: 52px; }
+  .section-cta__link {
+    display: inline-block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    opacity: 0.55;
+    text-decoration: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .section-cta__link:hover { opacity: 1; transform: translateX(4px); }
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  CONTACT                                        │
+     │  Dark. Email displayed as headline.             │
+     │  Minimal form below.                            │
+     └───────────────────────────────────────────────── */
+  .contact {
+    padding: 64px 0;
+    background: var(--navy);
+  }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px; align-items: start;
+  }
+
+  /* left col */
+  .contact__kicker { color: rgba(255,255,255,0.45); margin-bottom: 20px; }
+  .contact__prompt {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    color: #ffffff; line-height: 1.0;
+    margin-bottom: 20px;
+  }
+  .contact__email {
+    font-family: var(--sans);
+    font-size: clamp(0.85rem, 1.4vw, 1rem);
+    font-style: italic; font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+    padding-bottom: 3px;
+    display: inline-block;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .contact__email:hover {
+    color: #ffffff;
+    border-color: rgba(255,255,255,0.6);
+  }
+  .contact__details {
+    margin-top: 52px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .contact__detail {
+    display: flex; flex-direction: column;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .contact__detail-l {
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-bottom: 5px;
+  }
+  .contact__detail-v {
+    font-size: 0.86rem; color: rgba(255,255,255,0.65);
+  }
+  .contact__detail-v a { transition: color 0.3s; }
+  .contact__detail-v a:hover { color: #ffffff; }
+
+  /* right col — form */
+  .form__field { margin-bottom: 26px; }
+  .form__label {
+    display: block;
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 11px;
+  }
+  .form__input,
+  .form__select,
+  .form__area {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    padding: 10px 0 14px;
+    font-family: var(--sans); font-size: 0.86rem; font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    outline: none;
+    transition: border-color 0.3s;
+    -webkit-appearance: none; appearance: none; border-radius: 0;
+  }
+  .form__input::placeholder, .form__area::placeholder {
+    color: rgba(255,255,255,0.25);
+  }
+  .form__field:focus-within .form__label { color: rgba(255,255,255,0.75); }
+  .form__input:focus,
+  .form__select:focus,
+  .form__area:focus {
+    border-color: rgba(255,255,255,0.6);
+    color: #ffffff;
+  }
+  .form__area { resize: none; min-height: 76px; }
+
+  .form__select { color: rgba(255,255,255,0.65); }
+  .form__select option { background: var(--navy); color: rgba(255,255,255,0.85); }
+
+  .form__two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  .form__chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 4px 0 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .form__chip {
+    padding: 7px 18px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent;
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 300;
+    color: rgba(230,216,195,0.5);
+    cursor: pointer; border-radius: 40px; white-space: nowrap;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+  }
+  .form__chip:hover { border-color: rgba(255,255,255,0.6); color: rgba(255,255,255,0.9); }
+  .form__chip.is-active { background: rgba(255,255,255,0.12); border-color: #ffffff; color: #ffffff; }
+
+  .form__trust {
+    font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 14px; margin-top: 6px;
+  }
+
+  .form__submit {
+    width: 100%; margin-top: 4px;
+    padding: 16px 0;
+    font-family: var(--sans); font-size: 0.65rem; color: var(--navy);
+    font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--navy);
+    background: #ffffff;
+    transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .form__submit:not(:disabled):hover { opacity: 0.88; transform: translateY(-3px); }
+  .form__submit:not(:disabled):active { transform: translateY(0); transition-duration: 0.1s; }
+  .form__submit:disabled { opacity: 0.4; cursor: default; }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  INSTAGRAM FEED                                 │
+     └───────────────────────────────────────────────── */
+  .instagram {
+    padding: 0 0 64px;
+    background: var(--bg);
+  }
+  .instagram__head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .instagram__title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 2.8vw, 2.4rem);
+    font-weight: 600; letter-spacing: -0.01em;
+    color: var(--navy); line-height: 1.0;
+    margin-top: 14px;
+  }
+  .instagram__handle {
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--rule); padding-bottom: 3px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .instagram__handle:hover { color: var(--navy); border-color: var(--navy); }
+
+
+  @media (max-width: 768px) {
+    .instagram { padding: 0 0 32px; }
+    .instagram__head { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .instagram__placeholder { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 430px) {
+    .instagram__placeholder { grid-template-columns: repeat(2, 1fr); }
+  }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  FOOTER                                         │
+     │  Two lines. That's all.                         │
+     └───────────────────────────────────────────────── */
+  .footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(230,216,195,0.07);
+    padding: 36px 0;
+  }
+  .footer__inner {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer__mark {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .footer__mark img {
+    width: 22px; height: 22px; object-fit: contain; opacity: 0.6;
+  }
+  .footer__mark-name {
+    font-family: var(--serif);
+    font-size: 0.9rem; font-style: italic; font-weight: 300;
+    color: rgba(230,216,195,0.45);
+  }
+  .footer__right {
+    display: flex; align-items: center; gap: 28px;
+    font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(230,216,195,0.22);
+  }
+  .footer__right a {
+    color: rgba(230,216,195,0.35);
+    transition: color 0.3s;
+  }
+  .footer__right a:hover { color: rgba(230,216,195,0.7); }
+
+  .footer__social {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .footer__social a {
+    display: flex; align-items: center;
+    color: rgba(230,216,195,0.35);
+    transition: color 0.3s;
+  }
+  .footer__social a:hover { color: rgba(230,216,195,0.7); }
+  .footer__social svg { width: 15px; height: 15px; display: block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .footer__social a:hover svg { transform: scale(1.2); }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  LANGUAGE TOGGLE                                │
+     └───────────────────────────────────────────────── */
+  .lang-toggle {
+    display: flex; align-items: center; gap: 0;
+  }
+  .lang-toggle__sep {
+    font-size: 0.52rem;
+    color: rgba(255,255,255,0.2);
+    transition: color 0.4s;
+    user-select: none; pointer-events: none;
+  }
+  .nav.solid .lang-toggle__sep { color: var(--rule); }
+
+  .lang-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--sans);
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.32);
+    padding: 4px 6px; line-height: 1;
+    transition: color 0.3s;
+  }
+  .lang-btn.active          { color: rgba(255,255,255,0.82); }
+  .lang-btn:hover:not(.active) { color: rgba(255,255,255,0.58); }
+  .nav.solid .lang-btn          { color: var(--muted); }
+  .nav.solid .lang-btn.active   { color: var(--navy); }
+  .nav.solid .lang-btn:hover:not(.active) { color: var(--ink); }
+
+  /* on mobile keep toggle visible, hide nav links + book */
+  @media (max-width: 768px) {
+    .lang-toggle { order: 2; }   /* sits between logo and burger */
+  }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  WHATSAPP BUTTON                                │
+     └───────────────────────────────────────────────── */
+  .wa {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    z-index: 300;
+    display: flex; align-items: center; gap: 10px;
+    /* delayed entrance — doesn't compete with hero */
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease,
+                background 0.3s ease, box-shadow 0.3s ease;
+  }
+  .wa.visible { opacity: 1; transform: none; }
+
+  /* icon circle */
+  .wa__icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.30);
+    transition: background 0.3s ease, box-shadow 0.3s ease,
+                transform 0.3s ease;
+  }
+  .wa__icon svg { width: 22px; height: 22px; }
+
+  /* tooltip label — slides in on hover */
+  .wa__label {
+    font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--navy);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 7px 14px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    order: -1; /* sits to the left of the icon */
+  }
+
+  .wa:hover .wa__icon {
+    background: #1ebe5d;
+    box-shadow: 0 6px 22px rgba(37,211,102,0.38);
+    transform: translateY(-2px);
+  }
+  .wa:hover .wa__label {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 768px) {
+    .wa { bottom: 24px; right: 20px; }
+    /* hide label on mobile — space is tight */
+    .wa__label { display: none; }
+  }
+
+
+  /* ┌─────────────────────────────────────────────────┐
+     │  RESPONSIVE                                     │
+     └───────────────────────────────────────────────── */
+
+  /* 1024px */
+  @media (max-width: 1024px) {
+    .gut   { padding-left: 36px; padding-right: 36px; }
+    .gut-n { padding-left: 36px; padding-right: 36px; }
+    .nav        { padding: 24px 36px; }
+    .nav.solid  { padding: 15px 36px; }
+    .hero__body { padding: 0 52px 72px; }
+    .hero__scroll { right: 52px; bottom: 72px; }
+
+    .about__grid { grid-template-columns: 1fr; gap: 56px; }
+    .about__photo { width: 100%; aspect-ratio: 16/9; max-width: 520px; margin-top: 0; }
+
+    .experiences__intro { grid-template-columns: 1fr; gap: 24px; }
+
+    .break { aspect-ratio: 16/7; }
+
+
+    .gallery__grid { grid-template-columns: repeat(3, 1fr); }
+
+    .contact__grid { grid-template-columns: 1fr; gap: 64px; }
+  }
+
+  /* 768px */
+  @media (max-width: 768px) {
+    .gut   { padding-left: 24px; padding-right: 24px; }
+    .gut-n { padding-left: 24px; padding-right: 24px; }
+    .nav       { padding: 20px 24px; }
+    .nav.solid { padding: 13px 24px; }
+    .nav__links, .nav__book { display: none; }
+    .nav__burger             { display: flex; }
+
+    .hero__body   { padding: 0 28px 64px; }
+    .hero__scroll { display: none; }
+
+    .about { padding: 0 0 32px; }
+
+    .experiences { padding: 32px 0; }
+    .exp-showcase { grid-template-columns: 1fr; gap: 0; }
+    .exp-showcase__preview { display: none; }
+    .exp-showcase__item { grid-template-columns: 36px 1fr auto; }
+    .exp-showcase__arrow { display: none; }
+    .exp-showcase__item.is-active .exp-showcase__sub { max-height: 140px; }
+
+    .break { aspect-ratio: 4/3; }
+
+    .destinations { padding: 0 0 32px; }
+
+    .gallery { padding: 0 0 32px; }
+    .gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 180px;
+    }
+    .gp--h2 { grid-row: span 1; }
+
+    .contact { padding: 40px 0 32px; }
+
+    .footer__inner { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  /* 430px */
+  @media (max-width: 430px) {
+    .hero__line { font-size: 2.8rem; }
+    .gallery__grid { grid-auto-rows: 150px; }
+    .gp--w2 { grid-column: span 1; }
+    .form__two { grid-template-columns: 1fr; }
+  }
+
+  </style>
+</head>
+<body>
+
+
+  <!--
+  ═══════════════════════════════════════════
+  NAV
+  ═══════════════════════════════════════════ -->
+  <nav class="nav" id="nav" aria-label="Navegación">
+    <a href="/" class="nav__mark">
+      <img src="brand_assets/byCorazonada_logo.png" alt="ByCorazonada" />
+      <span class="nav__name">ByCorazonada</span>
+    </a>
+
+    <div class="nav__links">
+      <a href="#experiencias" data-i18n="nav-exp">Experiencias</a>
+      <a href="#destinos" data-i18n="nav-dest">Destinos</a>
+      <a href="#nosotros" data-i18n="nav-about">Nosotros</a>
+    </div>
+
+    <a href="#contacto" class="nav__book" data-i18n="nav-book">Reservar</a>
+
+    <div class="nav__social" aria-label="Redes sociales">
+      <a href="https://www.instagram.com/corazonadasailing" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="https://www.tiktok.com/@corazonada.sailin" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.28 8.28 0 0 0 4.84 1.53V6.84a4.85 4.85 0 0 1-1.07-.15z"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <span class="lang-toggle__sep" aria-hidden="true">/</span>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+
+    <button class="nav__burger" id="burger" aria-label="Menú" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+
+  <!--
+  ═══════════════════════════════════════════
+  HERO
+  ═══════════════════════════════════════════ -->
+  <section class="hero" aria-label="Portada">
+
+    <video
+      class="hero__video"
+      src="/public/videos/her.mp4"
+      preload="none"
+      autoplay
+      loop
+      muted
+      playsinline
+      aria-hidden="true"
+    ></video>
+    <div class="hero__vignette" aria-hidden="true"></div>
+
+    <!-- SVG threshold filter for liquid morph effect -->
+    <svg id="heroMorphSvg" style="display:none;position:absolute;" aria-hidden="true">
+      <defs>
+        <filter id="heroMorphThreshold">
+          <feColorMatrix in="SourceGraphic" type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 255 -140" />
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- Morphing text -->
+    <div class="hero-morph" aria-label="ByCorazonada">
+      <div class="hero-morph__inner">
+        <span id="heroMorphText1"></span>
+        <span id="heroMorphText2"></span>
+      </div>
+    </div>
+
+    <!-- Hero bottom text + CTA -->
+    <div style="position:relative;z-index:5;padding:0 80px 148px 100px;display:flex;flex-direction:column;align-items:flex-start;">
+      <a href="#contacto" class="hero__sub-line hero__sub-cta">
+        <span class="hero__sub-cta__strong" data-i18n="hero-sub-strong">Navega</span><span class="hero__sub-cta__light" data-i18n="hero-sub-light"> con nosotros</span><span class="hero__sub-cta__arrow"> →</span>
+      </a>
+    </div>
+
+  </section>
+
+
+  <!--
+  ═══════════════════════════════════════════
+  EXPERIENCES
+  ═══════════════════════════════════════════ -->
+  <section class="experiences" id="experiencias">
+    <div class="gut">
+
+      <div class="experiences__intro fade">
+        <p class="kicker" data-i18n="exp-kicker">Lo que ofrecemos</p>
+        <h2 class="experiences__headline" data-i18n="exp-headline">
+          ¿Cómo quieres<br />vivirlo?
+        </h2>
+      </div>
+
+      <div class="exp-cards">
+
+        <!-- Card 1 -->
+        <a href="#contacto" class="exp-card">
+          <div class="exp-card__img-wrap">
+            <img class="exp-card__img exp-card__img--default" src="/public/images/celeste.JPG" alt="" loading="lazy" />
+            <img class="exp-card__img exp-card__img--hover" src="/public/images/sunset.JPG" alt="" loading="lazy" />
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name" data-i18n="exp-1-name">Lancha</h3>
+            <p class="exp-card__sub" data-i18n="exp-1-sub">Salir unas horas, o quedarse todo el día. Rápido, simple, a tu ritmo.</p>
+            <span class="exp-card__cta" data-i18n="exp-cta">Ver experiencia →</span>
+          </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="#contacto" class="exp-card">
+          <div class="exp-card__img-wrap">
+            <img class="exp-card__img exp-card__img--default" src="/public/images/Barco1.JPG" alt="" loading="lazy" />
+            <img class="exp-card__img exp-card__img--hover" src="/public/images/paraiso.jpeg" alt="" loading="lazy" />
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name" data-i18n="exp-2-name">Catamarán</h3>
+            <p class="exp-card__sub" data-i18n="exp-2-sub">El mar sin prisa. Parar, nadar, quedarse más. Un día entero que se alarga solo.</p>
+            <span class="exp-card__cta" data-i18n="exp-cta">Ver experiencia →</span>
+          </div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="#contacto" class="exp-card">
+          <div class="exp-card__img-wrap">
+            <img class="exp-card__img exp-card__img--default" src="/public/images/vela.jpeg" alt="" loading="lazy" />
+            <img class="exp-card__img exp-card__img--hover" src="/public/images/velero.jpeg" alt="" loading="lazy" />
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name" data-i18n="exp-3-name">Velero</h3>
+            <p class="exp-card__sub" data-i18n="exp-3-sub">Dormir en el mar cambia todo. Una noche, o varios días a bordo.</p>
+            <span class="exp-card__cta" data-i18n="exp-cta">Ver experiencia →</span>
+          </div>
+        </a>
+
+      </div>
+      <div class="section-cta">
+        <a href="#contacto" class="section-cta__link" data-i18n="cta-book">Reservar →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!--
+  ═══════════════════════════════════════════
+  EXPERIENCES CAROUSEL
+  ═══════════════════════════════════════════ -->
+  <!--
+  ═══════════════════════════════════════════
+  DESTINATIONS
+  ═══════════════════════════════════════════ -->
+  <section class="destinations" id="destinos">
+    <div class="gut">
+      <div class="destinations__head fade">
+        <p class="kicker" data-i18n="dest-kicker">Dónde vamos</p>
+        <h2 class="destinations__title" data-i18n="dest-title">
+          Los mejores spots<br />de Ibiza y Formentera.
+        </h2>
+      </div>
+    </div>
+
+    <div class="gut">
+      <div class="dest-grid fade" data-delay="1">
+
+        <a href="#contacto" class="dest-card">
+          <img src="/public/images/colores.JPG" alt="Es Vedrà, Ibiza" loading="lazy" />
+          <div class="dest-card__overlay"></div>
+          <div class="dest-card__label">
+            <span class="dest-card__place">Ibiza</span>
+            <span class="dest-card__name">Es Vedrà</span>
+            <span class="dest-card__note" data-i18n="dest-note-1">El lugar más mágico del Mediterráneo.</span>
+            <span class="dest-card__cta" data-i18n="dest-cta">Descubrir →</span>
+          </div>
+        </a>
+
+        <a href="#contacto" class="dest-card">
+          <img src="/public/images/formentera2.JPG" alt="Ses Illetes, Formentera" loading="lazy" style="object-position: center 75%;" />
+          <div class="dest-card__overlay"></div>
+          <div class="dest-card__label">
+            <span class="dest-card__place">Formentera</span>
+            <span class="dest-card__name">Ses Illetes</span>
+            <span class="dest-card__note" data-i18n="dest-note-2">Otro mundo.</span>
+            <span class="dest-card__cta" data-i18n="dest-cta">Descubrir →</span>
+          </div>
+        </a>
+
+<a href="#contacto" class="dest-card">
+          <img src="/public/images/delfines.JPG" alt="Cuevas de Saona, Formentera" loading="lazy" />
+          <div class="dest-card__overlay"></div>
+          <div class="dest-card__label">
+            <span class="dest-card__place">Ibiza</span>
+            <span class="dest-card__name">Mar Abierto</span>
+            <span class="dest-card__note" data-i18n="dest-note-4">Poca gente. Mucho mar.</span>
+            <span class="dest-card__cta" data-i18n="dest-cta">Descubrir →</span>
+          </div>
+        </a>
+
+
+      </div>
+      <div class="section-cta">
+        <a href="#contacto" class="section-cta__link" data-i18n="cta-book">Reservar →</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!--
+  ═══════════════════════════════════════════
+  INSTAGRAM FEED
+  ═══════════════════════════════════════════ -->
+  <section class="instagram" id="instagram">
+    <div class="gut">
+
+      <div class="instagram__head fade">
+        <div>
+          <p class="kicker" data-i18n="ig-kicker">Momentos reales</p>
+          <h2 class="instagram__title" data-i18n="ig-title">
+            El mar, día a día.
+          </h2>
+        </div>
+        <a
+          class="instagram__handle"
+          href="https://www.instagram.com/corazonadasailing/"
+          target="_blank"
+          rel="noopener"
+        >@corazonadasailing →</a>
+      </div>
+
+      <!-- Elfsight Instagram Feed -->
+      <script src="https://elfsightcdn.com/platform.js" async></script>
+      <div class="elfsight-app-2f3717f5-ea02-4bcc-9619-9be8dbd50fd0" data-elfsight-app-lazy></div>
+
+    </div>
+  </section>
+
+
+  <!--
+  ═══════════════════════════════════════════
+  ABOUT
+  ═══════════════════════════════════════════ -->
+  <section class="about" id="nosotros">
+    <div class="gut">
+      <div class="about__grid">
+
+        <div class="about__text">
+          <h2 class="about__headline fade" data-i18n="about-headline">
+            Detrás de cada salida
+          </h2>
+          <div class="about__body fade" data-delay="1">
+            <p data-i18n="about-p1">
+              Cada salida combina navegación, paradas en calas y tiempo en el agua.
+            </p>
+            <p data-i18n="about-p2">
+              Snorkel, paddle o simplemente parar y disfrutar.<br />A veces cuevas, a veces delfines.<br /><br />Con los mejores capitanes para que tengas un día increíble.
+            </p>
+          </div>
+          <p class="about__aside fade" data-delay="2" data-i18n="about-aside">
+            Charters privados &amp; experiencias<br />
+            Ibiza desde el mar
+          </p>
+        </div>
+
+        <img
+          class="about__photo fade"
+          data-delay="1"
+          src="/public/images/surfer.jpeg"
+          alt="Personas en cubierta"
+          loading="lazy"
+        />
+
+      </div>
+      <div class="section-cta">
+        <a href="#contacto" class="section-cta__link" data-i18n="cta-book">Reservar →</a>
+      </div>
+    </div>
+  </section>
+
+
+<!--
+  ═══════════════════════════════════════════
+  CONTACT
+  ═══════════════════════════════════════════ -->
+  <section class="contact" id="contacto">
+    <div class="gut">
+      <div class="contact__grid">
+
+        <!-- left -->
+        <div>
+          <p class="kicker contact__kicker fade" data-i18n="contact-kicker">Reservas</p>
+          <h2 class="contact__prompt fade" data-delay="1" data-i18n="contact-prompt">
+            Contáctanos.
+          </h2>
+          <a class="contact__email fade" data-delay="2" href="mailto:bycorazonada@gmail.com">
+            bycorazonada@gmail.com
+          </a>
+
+          <div class="contact__details fade" data-delay="2">
+            <div class="contact__detail">
+              <span class="contact__detail-l">WhatsApp</span>
+              <span class="contact__detail-v">
+                <a href="https://wa.me/59898027809">+598 98027809</a>
+              </span>
+            </div>
+            <div class="contact__detail">
+              <span class="contact__detail-l">Instagram</span>
+              <span class="contact__detail-v">
+                <a href="https://www.instagram.com/corazonadasailing/" target="_blank" rel="noopener">@corazonadasailing</a>
+              </span>
+            </div>
+            <div class="contact__detail">
+              <span class="contact__detail-l" data-i18n="contact-season-l">Temporada</span>
+              <span class="contact__detail-v" data-i18n="contact-season-v">Mayo — Octubre</span>
+            </div>
+            <div class="contact__detail">
+              <span class="contact__detail-l">Base</span>
+              <span class="contact__detail-v">Ibiza, Islas Baleares</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- right — form -->
+        <form id="form" novalidate class="fade" data-delay="1">
+
+          <div class="form__two">
+            <div class="form__field">
+              <label class="form__label" for="nombre" data-i18n="form-name">Nombre</label>
+              <input class="form__input" id="nombre" type="text" name="nombre"
+                     placeholder="Tu nombre" autocomplete="given-name" data-i18n-ph="ph-name" />
+            </div>
+            <div class="form__field">
+              <label class="form__label" for="personas" data-i18n="form-guests">Personas</label>
+              <input class="form__input" id="personas" type="number" name="personas"
+                     placeholder="4" min="1" max="12" />
+            </div>
+          </div>
+
+          <div class="form__field">
+            <label class="form__label" for="email">Email</label>
+            <input class="form__input" id="email" type="email" name="email"
+                   placeholder="tu@email.com" autocomplete="email" />
+          </div>
+
+          <div class="form__field">
+            <label class="form__label" for="fecha" data-i18n="form-date">Fecha aproximada</label>
+            <input class="form__input" id="fecha" type="date" name="fecha" />
+          </div>
+
+          <div class="form__field">
+            <label class="form__label" data-i18n="form-type">¿Qué experiencia buscas?</label>
+            <div class="form__chips" id="expChips">
+              <button type="button" class="form__chip" data-value="halfday" data-i18n="sel-sunrise">Lancha</button>
+              <button type="button" class="form__chip" data-value="daycharter" data-i18n="sel-full">Catamarán</button>
+              <button type="button" class="form__chip" data-value="overnight" data-i18n="sel-custom">Velero</button>
+              <button type="button" class="form__chip" data-value="unsure" data-i18n="sel-unsure">Aún no lo sé</button>
+            </div>
+            <input type="hidden" name="tipo" id="tipo" value="" />
+          </div>
+
+          <div class="form__field">
+            <label class="form__label" for="msg" data-i18n="form-msg">Cuéntanos más</label>
+            <textarea class="form__area" id="msg" name="msg"
+              placeholder="Aniversario, cumpleaños, o simplemente un día que queréis recordar…"
+              data-i18n-ph="ph-msg"></textarea>
+          </div>
+
+          <p class="form__trust" data-i18n="form-trust">Respondemos en menos de 24h.</p>
+          <button type="submit" class="form__submit" id="send" data-i18n="form-submit">
+            Enviar consulta
+          </button>
+
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!--
+
+
+  <!--
+  ═══════════════════════════════════════════
+  FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="gut footer__inner">
+
+      <div class="footer__mark">
+        <img src="brand_assets/byCorazonada_logo.png" alt="ByCorazonada" />
+        <span class="footer__mark-name">ByCorazonada</span>
+      </div>
+
+      <div class="footer__right">
+        <span>© 2025 · Ibiza</span>
+        <div class="footer__social" aria-label="Redes sociales">
+          <a href="https://www.instagram.com/corazonadasailing" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://www.tiktok.com/@corazonada.sailin" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.28 8.28 0 0 0 4.84 1.53V6.84a4.85 4.85 0 0 1-1.07-.15z"/>
+            </svg>
+          </a>
+        </div>
+        <a href="#" data-i18n="footer-privacy">Privacidad</a>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!--
+  ═══════════════════════════════════════════
+  JS
+  ═══════════════════════════════════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ══════════════════════════════════════════════
+       TRANSLATIONS
+    ══════════════════════════════════════════════ */
+    var LANG = {
+      es: {
+        'nav-about'       : 'Nosotros',
+        'nav-exp'         : 'Experiencias',
+        'nav-dest'        : 'Destinos',
+        'nav-book'        : 'Reservar',
+        'hero-title'      : 'Desde<br />el mar.',
+        'about-headline'  : 'Detrás de cada salida',
+        'about-p1'        : 'Cada salida combina navegación, paradas en calas y tiempo en el agua.',
+        'about-p2'        : 'Snorkel, paddle o simplemente parar y disfrutar.<br />A veces cuevas, a veces delfines.<br /><br />Con los mejores capitanes para que tengas un día increíble.',
+        'about-aside'     : 'Charters privados &amp; experiencias<br />Ibiza desde el mar',
+        'exp-kicker'      : 'Lo que ofrecemos',
+        'exp-headline'    : '¿Cómo quieres<br />vivirlo?',
+        'exp-1-name'      : 'Lancha',
+        'exp-1-sub'       : 'Salir unas horas, o quedarse todo el día. Rápido, simple, a tu ritmo.',
+        'exp-1-dur'       : '',
+        'exp-2-name'      : 'Catamarán',
+        'exp-2-sub'       : 'El mar sin prisa. Parar, nadar, quedarse más. Un día entero que se alarga solo.',
+        'exp-2-dur'       : '',
+        'exp-3-name'      : 'Velero',
+        'exp-3-sub'       : 'Dormir en el mar cambia todo. Una noche, o varios días a bordo.',
+        'exp-3-dur'       : '',
+        'exp-cta'         : 'Ver experiencia',
+        'hero-sub'        : 'Navega con nosotros',
+        'hero-sub-strong' : 'Navega',
+        'hero-sub-light'  : ' con nosotros',
+        'hero-subtitle'   : 'Ibiza hace el resto.',
+        'hero-cta'        : 'viví el mar →',
+        'ig-kicker'       : 'Momentos reales',
+        'ig-title'        : 'El mar, día a día.',
+        'xcar-kicker'     : 'Experiencias',
+        'dest-kicker'     : 'Dónde vamos',
+        'dest-title'      : 'Los mejores spots<br />de Ibiza y Formentera.',
+        'dest-note-1'     : 'El lugar más mágico del Mediterráneo.',
+        'dest-note-2'     : 'Otro mundo.',
+        'dest-note-3'     : 'Vista directa a Es Vedrà. Agua inmóvil.',
+        'dest-note-4'     : 'Poca gente. Mucho mar.',
+        'dest-note-5'     : 'El comienzo de todo.',
+        'dest-cta'        : 'Descubrir →',
+        'gallery-kicker'  : 'Momentos reales',
+        'contact-kicker'  : 'Reservas',
+        'contact-prompt'  : 'Contáctanos.',
+        'contact-season-l': 'Temporada',
+        'contact-season-v': 'Abril — Noviembre',
+        'form-name'       : 'Nombre',
+        'form-guests'     : 'Personas',
+        'form-date'       : 'Fecha aproximada',
+        'form-type'       : '¿Qué experiencia buscas?',
+        'form-msg'        : 'Cuéntanos más',
+        'ph-name'         : 'Tu nombre',
+        'ph-msg'          : 'Aniversario, cumpleaños, o simplemente un día que queréis recordar…',
+        'sel-placeholder' : 'Seleccionar',
+        'sel-sunrise'     : 'Lancha',
+        'sel-full'        : 'Catamarán',
+        'sel-custom'      : 'Velero',
+
+        'sel-unsure'      : 'Aún no lo sé',
+        'form-submit'     : 'Enviar consulta',
+        'form-sent'       : 'Enviado ✓',
+        'form-trust'      : 'Respondemos en menos de 24h.',
+        'cta-book'        : 'Reservar →',
+        'cta-exp'         : 'Ver experiencias →',
+        'footer-privacy'  : 'Privacidad',
+        'wa-msg'          : 'Hola%2C%20me%20interesa%20reservar%20un%20charter%20con%20ByCorazonada'
+      },
+      en: {
+        'nav-about'       : 'About',
+        'nav-exp'         : 'Experiences',
+        'nav-dest'        : 'Destinations',
+        'nav-book'        : 'Book',
+        'hero-title'      : 'From<br />the sea.',
+        'about-headline'  : 'A boat and the urge<br />to show you this sea<br />the way it deserves.',
+        'about-p1'        : 'ByCorazonada started with a spontaneous decision. Get on the boat with no fixed plan and see where the wind takes you. It began like that. Still does.',
+        'about-p2'        : 'No set itinerary. No script. Every trip is different — because the sea is too.',
+        'about-aside'     : 'Private charters &amp; experiences<br />Ibiza from the sea',
+        'exp-kicker'      : 'What we offer',
+        'exp-headline'    : 'How do you want<br />to live it?',
+        'exp-1-name'      : 'Boat',
+        'exp-1-sub'       : 'A few hours, or the whole day. Fast, simple, on your terms.',
+        'exp-1-dur'       : '',
+        'exp-2-name'      : 'Catamaran',
+        'exp-2-sub'       : 'The sea without rushing. Stop, swim, stay longer. A full day that stretches itself.',
+        'exp-2-dur'       : '',
+        'exp-3-name'      : 'Sailboat',
+        'exp-3-sub'       : 'Sleeping at sea changes everything. One night, or several days on board.',
+        'exp-3-dur'       : '',
+        'exp-cta'         : 'See experience',
+        'hero-sub'        : 'Step on board.',
+        'hero-sub-strong' : 'Sail',
+        'hero-sub-light'  : ' with us',
+        'hero-subtitle'   : 'Ibiza does the rest.',
+        'hero-cta'        : 'feel the sea →',
+        'ig-kicker'       : 'Follow us',
+        'ig-title'        : 'The sea, day by day.',
+        'xcar-kicker'     : 'Experiences',
+        'dest-kicker'     : 'Where we go',
+        'dest-title'      : 'Corners that aren\'t<br />on any map.',
+        'dest-note-1'     : 'The most magical spot in the Mediterranean.',
+        'dest-note-2'     : 'Another world.',
+        'dest-note-3'     : 'Es Vedrà view. Still, flat water.',
+        'dest-note-4'     : 'Few people. Open sea.',
+        'dest-note-5'     : 'Where it all begins.',
+        'dest-cta'        : 'Discover →',
+        'gallery-kicker'  : 'Real moments',
+        'contact-kicker'  : 'Bookings',
+        'contact-prompt'  : 'Tell us<br />what you have<br />in mind.',
+        'contact-season-l': 'Season',
+        'contact-season-v': 'April — November',
+        'form-name'       : 'Name',
+        'form-guests'     : 'Guests',
+        'form-date'       : 'Approximate date',
+        'form-type'       : 'What kind of day are you after?',
+        'form-msg'        : 'Tell us more',
+        'ph-name'         : 'Your name',
+        'ph-msg'          : 'Anniversary, birthday, or just a day you want to remember…',
+        'sel-placeholder' : 'Select',
+        'sel-sunrise'     : 'Boat',
+        'sel-full'        : 'Catamaran',
+        'sel-custom'      : 'Sailboat',
+        'sel-unsure'      : 'Not sure yet',
+        'form-submit'     : 'Send enquiry',
+        'form-sent'       : 'Sent ✓',
+        'form-trust'      : 'We reply within 24 hours.',
+        'cta-book'        : 'Book now →',
+        'cta-exp'         : 'See experiences →',
+        'footer-privacy'  : 'Privacy',
+        'wa-msg'          : 'Hi%2C%20I\'d%20love%20to%20know%20more%20about%20a%20charter%20with%20ByCorazonada'
+      }
+    };
+
+    var currentLang = 'es';
+
+    function applyLang(lang) {
+      var t = LANG[lang];
+      currentLang = lang;
+
+      /* text / innerHTML */
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+
+      /* placeholders */
+      document.querySelectorAll('[data-i18n-ph]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n-ph');
+        if (t[key] !== undefined) el.placeholder = t[key];
+      });
+
+      /* toggle button active states */
+      document.querySelectorAll('.lang-btn').forEach(function (btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      /* html lang attribute */
+      document.documentElement.setAttribute('lang', lang);
+
+      /* WhatsApp href */
+      var wa = document.getElementById('waBtn');
+      if (wa && t['wa-msg']) {
+        wa.href = 'https://wa.me/59898027809?text=' + t['wa-msg'];
+      }
+    }
+
+    /* lang toggle click handler */
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var lang = btn.getAttribute('data-lang');
+        if (lang !== currentLang) applyLang(lang);
+      });
+    });
+
+    /* ── nav: transparent over hero, solid when scrolled ── */
+    var nav = document.getElementById('nav');
+    function onScroll () {
+      nav.classList.toggle('solid', window.scrollY > 52);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ── hero photo: slow zoom on load ── */
+    var bg = document.getElementById('heroBg');
+    if (bg) {
+      requestAnimationFrame(function () {
+        setTimeout(function () { bg.classList.add('loaded'); }, 60);
+      });
+    }
+
+    /* ── scroll-triggered fade-in (text only) ── */
+    var fades = document.querySelectorAll('.fade');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('show');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
+      fades.forEach(function (el) { io.observe(el); });
+    } else {
+      fades.forEach(function (el) { el.classList.add('show'); });
+    }
+
+    /* ── smooth anchor scroll (accounts for fixed nav height) ── */
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href');
+        if (id === '#') return;
+        var target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        var offset = nav.getBoundingClientRect().height + 8;
+        var top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      });
+    });
+
+    /* ── Hero morphing text ── */
+    (function () {
+      var texts     = ['MAR', 'CATAMARÁN', 'IBIZA', 'FORMENTERA'];
+      var morphTime = 2;
+      var cooldownTime = 2;
+
+      var text1 = document.getElementById('heroMorphText1');
+      var text2 = document.getElementById('heroMorphText2');
+      if (!text1 || !text2) return;
+
+      var textIndex = 0;
+      var morph     = 0;
+      var cooldown  = 0;
+      var lastTime  = Date.now();
+
+      function setStyles(fraction) {
+        var inv = 1 - fraction;
+        text2.style.filter  = 'blur(' + Math.min(8 / fraction - 8, 100) + 'px)';
+        text2.style.opacity = (Math.pow(fraction, 0.4) * 100) + '%';
+        text1.style.filter  = 'blur(' + Math.min(8 / inv - 8, 100) + 'px)';
+        text1.style.opacity = (Math.pow(inv, 0.4) * 100) + '%';
+        text1.textContent   = texts[textIndex % texts.length];
+        text2.textContent   = texts[(textIndex + 1) % texts.length];
+      }
+
+      function doMorph() {
+        morph   -= cooldown;
+        cooldown = 0;
+        var fraction = morph / morphTime;
+        if (fraction > 1) { cooldown = cooldownTime; fraction = 1; }
+        setStyles(fraction);
+        if (fraction === 1) textIndex++;
+      }
+
+      function doCooldown() {
+        morph = 0;
+        text2.style.filter  = 'none';
+        text2.style.opacity = '100%';
+        text1.style.filter  = 'none';
+        text1.style.opacity = '0%';
+      }
+
+      (function animate() {
+        requestAnimationFrame(animate);
+        var now = Date.now();
+        var dt  = (now - lastTime) / 1000;
+        lastTime = now;
+        cooldown -= dt;
+        if (cooldown <= 0) doMorph();
+        else doCooldown();
+      }());
+    }());
+
+    /* ── Experience chips ── */
+    (function () {
+      var chips = document.querySelectorAll('#expChips .form__chip');
+      var hidden = document.getElementById('tipo');
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          var val = chip.getAttribute('data-value');
+          var isActive = chip.classList.contains('is-active');
+          chips.forEach(function (c) { c.classList.remove('is-active'); });
+          if (!isActive) {
+            chip.classList.add('is-active');
+            if (hidden) hidden.value = val;
+          } else {
+            if (hidden) hidden.value = '';
+          }
+        });
+      });
+    }());
+
+    /* ── contact form: basic success state ── */
+    var form = document.getElementById('form');
+    var send = document.getElementById('send');
+    if (form && send) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        send.textContent = LANG[currentLang]['form-sent'] || 'Enviado ✓';
+        send.style.background = 'var(--olive)';
+        send.style.color = '#fff';
+        send.disabled = true;
+      });
+    }
+
+  }());
+  </script>
+
+
+  <!-- WhatsApp floating button -->
+  <a
+    id="waBtn"
+    class="wa"
+    href="https://wa.me/59898027809?text=Hola%2C%20me%20interesa%20reservar%20un%20charter%20con%20ByCorazonada"
+    target="_blank"
+    rel="noopener"
+    aria-label="Contactar por WhatsApp"
+  >
+    <span class="wa__label">WhatsApp</span>
+    <span class="wa__icon">
+      <!-- WhatsApp icon -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path fill="#fff" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.417A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+        <path fill="#25D366" d="M17.004 14.57c-.277-.138-1.637-.807-1.89-.898-.254-.092-.438-.138-.622.138-.184.277-.713.898-.874 1.082-.16.184-.322.207-.598.07-.277-.139-1.168-.43-2.224-1.372-.822-.733-1.376-1.638-1.537-1.914-.162-.276-.017-.425.121-.562.124-.124.277-.322.415-.483.139-.162.185-.277.277-.46.092-.185.046-.346-.023-.484-.07-.139-.622-1.498-.852-2.051-.224-.539-.452-.466-.622-.475l-.53-.009c-.184 0-.483.07-.737.346-.253.277-.966.944-.966 2.303s.99 2.672 1.128 2.856c.138.184 1.95 2.978 4.727 4.177.66.285 1.175.456 1.577.583.662.21 1.265.18 1.741.11.531-.08 1.637-.669 1.868-1.315.23-.645.23-1.197.162-1.314-.07-.116-.253-.185-.53-.323z"/>
+      </svg>
+    </span>
+  </a>
+
+  <script>
+    // Show the WhatsApp button after a short delay
+    setTimeout(function () {
+      var btn = document.getElementById('waBtn');
+      if (btn) btn.classList.add('visible');
+    }, 1800);
+  </script>
+
+</body>
+</html>

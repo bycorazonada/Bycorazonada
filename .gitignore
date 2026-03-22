@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+
+# Screenshots de trabajo
+temporary_screenshots/
+
+# Claude settings
+.claude/
+
+# TypeScript build info
+tsconfig.tsbuildinfo
+
+# OS
+.DS_Store
+
+# Env
+.env*
