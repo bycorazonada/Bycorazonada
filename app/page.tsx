@@ -317,10 +317,6 @@ export default function ByCorazonadaPage() {
 
         <div className="hero__body">
           <p className="hero__tag">Ibiza · Formentera</p>
-          <h1
-            className="hero__line"
-            dangerouslySetInnerHTML={{ __html: t["hero-title"] }}
-          />
           <a href="#contacto" className="hero__sub hero__sub-cta">
             <span className="hero__sub-cta__strong">{t["hero-sub-strong"]}</span><span className="hero__sub-cta__light">{t["hero-sub-light"]}</span><span className="hero__sub-cta__arrow"> →</span>
           </a>
