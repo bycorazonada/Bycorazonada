@@ -36,6 +36,7 @@ const LANG = {
     "nav-dest": "Destinos",
     "nav-book": "Reservar",
     "hero-title": "Desde<br />el mar.",
+    "about-kicker": "Nosotros",
     "about-headline": "Detrás de cada salida",
     "about-p1": "Cada salida combina navegación, paradas en calas y tiempo en el agua.",
     "about-p2": "Snorkel, paddle o simplemente parar y disfrutar.<br />A veces cuevas, a veces delfines.<br /><br />Con los mejores capitanes para que tengas un día increíble.",
@@ -99,6 +100,7 @@ const LANG = {
     "nav-dest": "Destinations",
     "nav-book": "Book",
     "hero-title": "From<br />the sea.",
+    "about-kicker": "About us",
     "about-headline": "A boat and the urge<br />to show you this sea<br />the way it deserves.",
     "about-p1": "ByCorazonada started with a spontaneous decision. Get on the boat with no fixed plan and see where the wind takes you. It began like that. Still does.",
     "about-p2": "No set itinerary. No script. Every trip is different — because the sea is too.",
@@ -459,6 +461,7 @@ export default function ByCorazonadaPage() {
         <div className="gut">
           <div className="about__grid">
             <div className="about__text">
+              <p className="kicker fade">{t["about-kicker"]}</p>
               <h2
                 className="about__headline fade"
                 dangerouslySetInnerHTML={{ __html: t["about-headline"] }}
