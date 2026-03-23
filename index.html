@@ -807,6 +807,76 @@
   /* ┌─────────────────────────────────────────────────┐
      │  INSTAGRAM FEED                                 │
      └───────────────────────────────────────────────── */
+  /* ┌─────────────────────────────────────────────────┐
+     │  TESTIMONIALS                                   │
+     └───────────────────────────────────────────────── */
+  .testimonials {
+    padding: 64px 0;
+    background: var(--sand);
+  }
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 36px;
+  }
+  .testimonial-card {
+    background: var(--bg);
+    padding: 32px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .testimonial-card__quote {
+    position: absolute;
+    top: 16px; right: 20px;
+    font-family: var(--serif);
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--sand);
+    pointer-events: none;
+  }
+  .testimonial-card__stars {
+    display: flex; gap: 3px;
+    color: #c9a84c;
+    font-size: 0.8rem;
+  }
+  .testimonial-card__text {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--ink);
+    opacity: 0.78;
+    flex: 1;
+  }
+  .testimonial-card__author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-top: 1px solid var(--rule);
+    padding-top: 20px;
+  }
+  .testimonial-card__author img {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .testimonial-card__author strong {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .testimonial-card__author span {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+  @media (max-width: 900px) {
+    .testimonials__grid { grid-template-columns: 1fr; gap: 16px; }
+  }
+
   .instagram {
     padding: 0 0 64px;
     background: var(--bg);
@@ -1329,6 +1399,65 @@
       <script src="https://elfsightcdn.com/platform.js" async></script>
       <div class="elfsight-app-2f3717f5-ea02-4bcc-9619-9be8dbd50fd0" data-elfsight-app-lazy></div>
 
+    </div>
+  </section>
+
+
+  <!--
+  ═══════════════════════════════════════════
+  TESTIMONIALS
+  ═══════════════════════════════════════════ -->
+  <section class="testimonials" id="testimonios">
+    <div class="gut">
+      <p class="kicker fade">Lo que dicen</p>
+      <div class="testimonials__grid">
+
+        <div class="testimonial-card fade" data-delay="1">
+          <div class="testimonial-card__quote">"</div>
+          <div class="testimonial-card__stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-card__text">"Un día que no olvidaremos. El capitán conocía cada rincón, paramos en una cala escondida y acabamos nadando con delfines. Totalmente fuera de lo normal."</p>
+          <div class="testimonial-card__author">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="Sarah" />
+            <div>
+              <strong>Sarah Johnson</strong>
+              <span>Barcelona, España</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade" data-delay="2">
+          <div class="testimonial-card__quote">"</div>
+          <div class="testimonial-card__stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-card__text">"Reservamos para el cumpleaños de mi mujer. Sin itinerario fijo, sin prisas. Solo mar, música tranquila y los mejores atardeceres que hemos visto en Ibiza."</p>
+          <div class="testimonial-card__author">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Marc" />
+            <div>
+              <strong>Marc Llorens</strong>
+              <span>Madrid, España</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade" data-delay="3">
+          <div class="testimonial-card__quote">"</div>
+          <div class="testimonial-card__stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="testimonial-card__text">"Fueron increíblemente flexibles. Cambiamos el plan dos veces y siempre con buena actitud. Formentera desde el agua es otra cosa completamente."</p>
+          <div class="testimonial-card__author">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Emily" />
+            <div>
+              <strong>Emily Chen</strong>
+              <span>Londres, Reino Unido</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
