@@ -52,6 +52,7 @@ button { font-family: inherit; background: none; border: none; cursor: pointer; 
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--olive);
+  margin-bottom: 14px;
 }
 
 
