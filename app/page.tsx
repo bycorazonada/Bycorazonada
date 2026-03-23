@@ -311,7 +311,7 @@ export default function ByCorazonadaPage() {
         <div className="absolute inset-0 z-[4] flex items-center justify-center pointer-events-none">
           <MorphingText
             texts={["MAR", "CATAMARÁN", "IBIZA", "FORMENTERA"]}
-            className="font-bold tracking-[0.2em] text-white h-24 text-[4rem] md:h-36 md:text-[6rem] lg:h-44 lg:text-[8rem]"
+            className="font-bold text-white whitespace-nowrap tracking-[0.12em] text-[2.4rem] h-[3.2rem] md:tracking-[0.2em] md:h-36 md:text-[6rem] lg:h-44 lg:text-[8rem]"
           />
         </div>
 
