@@ -161,6 +161,23 @@
   @media (max-width: 768px) { .nav__social { display: none; } }
 
 
+  /* burger button — mobile only */
+  .burger {
+    display: none;
+    flex-direction: column; justify-content: center; align-items: center;
+    gap: 5px; width: 40px; height: 40px;
+    background: none; border: none;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .burger span {
+    display: block; width: 22px; height: 2px;
+    background: #fff;
+    border-radius: 2px;
+  }
+  .nav.solid .burger span { background: var(--ink); }
+
   /* mobile drawer */
   .nav__drawer {
     display: none;
@@ -168,9 +185,7 @@
     background: var(--bg);
     flex-direction: column; justify-content: center; align-items: center;
   }
-  .nav__drawer.open {
-    display: flex;
-  }
+  .nav__drawer.open { display: flex; }
   .nav__drawer a {
     font-family: var(--serif);
     font-size: clamp(1.8rem, 7vw, 2.6rem);
@@ -178,6 +193,8 @@
     color: var(--ink);
     padding: 16px 0;
     text-align: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   .nav__drawer a:hover { color: var(--navy); }
   .nav__drawer__close {
@@ -950,6 +967,7 @@
     .nav       { padding: 20px 24px; }
     .nav.solid { padding: 13px 24px; }
     .nav__links, .nav__book { display: none; }
+    .burger { display: flex; }
 
     .hero__body   { padding: 0 28px 64px; }
     .hero__scroll { display: none; }
@@ -1035,6 +1053,10 @@
       <span class="lang-toggle__sep" aria-hidden="true">/</span>
       <button class="lang-btn" data-lang="en">EN</button>
     </div>
+
+    <button class="burger" onclick="document.getElementById('drawer').classList.add('open');document.body.style.overflow='hidden'" aria-label="Menú">
+      <span></span><span></span>
+    </button>
 
   </nav>
 
