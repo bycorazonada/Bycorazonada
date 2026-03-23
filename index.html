@@ -160,22 +160,6 @@
   .nav__social a:hover svg { transform: scale(1.2); }
   @media (max-width: 768px) { .nav__social { display: none; } }
 
-  /* mobile burger */
-  .nav__burger {
-    display: none; flex-direction: column; gap: 5px; padding: 10px;
-    z-index: 1001; position: relative;
-    cursor: pointer;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .nav__burger span {
-    display: block; width: 22px; height: 1px; background: #fff;
-    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease, background 0.4s;
-    transform-origin: center;
-  }
-  .nav.solid .nav__burger span { background: var(--ink); }
-  .nav__burger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--ink); }
-  .nav__burger.is-open span:nth-child(2) { transform: translateY(-6px) rotate(-45deg); background: var(--ink); }
 
   /* mobile drawer */
   .nav__drawer {
@@ -879,11 +863,6 @@
     bottom: 32px; right: 32px;
     z-index: 300;
     display: flex; align-items: center; gap: 10px;
-    /* delayed entrance — doesn't compete with hero */
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.5s ease, transform 0.5s ease,
-                background 0.3s ease, box-shadow 0.3s ease;
   }
   .wa.visible { opacity: 1; transform: none; }
 
@@ -971,7 +950,6 @@
     .nav       { padding: 20px 24px; }
     .nav.solid { padding: 13px 24px; }
     .nav__links, .nav__book { display: none; }
-    .nav__burger             { display: flex; }
 
     .hero__body   { padding: 0 28px 64px; }
     .hero__scroll { display: none; }
