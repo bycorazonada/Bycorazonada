@@ -183,23 +183,69 @@
     display: none;
     position: fixed; inset: 0; z-index: 9999;
     background: var(--bg);
-    flex-direction: column; justify-content: center; align-items: center;
+    flex-direction: column; justify-content: center; align-items: flex-start;
+    padding: 0 40px;
   }
   .nav__drawer.open { display: flex; }
-  .nav__drawer a {
+
+  /* staggered fade-in when open */
+  .nav__drawer.open .nav__drawer__label,
+  .nav__drawer.open .nav__drawer__item,
+  .nav__drawer.open .nav__drawer__cta {
+    animation: drawerFadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .nav__drawer.open .nav__drawer__label          { animation-delay: 0.05s; }
+  .nav__drawer.open .nav__drawer__item:nth-child(1) { animation-delay: 0.12s; }
+  .nav__drawer.open .nav__drawer__item:nth-child(2) { animation-delay: 0.18s; }
+  .nav__drawer.open .nav__drawer__item:nth-child(3) { animation-delay: 0.24s; }
+  .nav__drawer.open .nav__drawer__item:nth-child(4) { animation-delay: 0.30s; }
+  .nav__drawer.open .nav__drawer__cta              { animation-delay: 0.38s; }
+
+  @keyframes drawerFadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .nav__drawer__inner {
+    display: flex; flex-direction: column;
+    width: 100%;
+  }
+  .nav__drawer__label {
+    font-size: 0.63rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--olive);
+    margin-bottom: 28px;
+  }
+  .nav__drawer__links {
+    display: flex; flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .nav__drawer__item {
     font-family: var(--serif);
-    font-size: clamp(1.8rem, 7vw, 2.6rem);
-    font-weight: 600; letter-spacing: -0.01em;
+    font-size: 1.9rem; font-weight: 600;
     color: var(--ink);
-    padding: 16px 0;
-    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
-  .nav__drawer a:hover { color: var(--navy); }
+  .nav__drawer__item:active { color: var(--navy); }
+  .nav__drawer__cta {
+    display: inline-block;
+    margin-top: 36px;
+    font-family: var(--sans);
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--bg);
+    background: var(--navy);
+    padding: 14px 32px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav__drawer__cta:active { opacity: 0.8; }
   .nav__drawer__close {
     position: absolute; top: 24px; right: 24px;
-    font-size: 1.8rem; color: var(--muted); cursor: pointer;
+    font-size: 1.4rem; color: var(--muted); cursor: pointer;
     background: none; border: none; padding: 12px;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
@@ -1063,11 +1109,17 @@
   <!-- Mobile drawer -->
   <div class="nav__drawer" id="drawer">
     <button class="nav__drawer__close" aria-label="Cerrar menú" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">✕</button>
-    <a href="#experiencias" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''" data-i18n="nav-exp">Lo que ofrecemos</a>
-    <a href="#destinos" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''" data-i18n="nav-dest">Dónde vamos</a>
-    <a href="#instagram" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''" data-i18n="ig-kicker">Momentos reales</a>
-    <a href="#nosotros" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''" data-i18n="nav-about">Nosotros</a>
-    <a href="#contacto" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''" data-i18n="nav-book">Reservar</a>
+
+    <div class="nav__drawer__inner">
+      <p class="nav__drawer__label">Explorar</p>
+      <nav class="nav__drawer__links">
+        <a href="#experiencias" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Experiencias</a>
+        <a href="#destinos" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Dónde vamos</a>
+        <a href="#instagram" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Momentos reales</a>
+        <a href="#nosotros" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Nosotros</a>
+      </nav>
+      <a href="#contacto" class="nav__drawer__cta" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Reservar</a>
+    </div>
   </div>
 
 
