@@ -2027,5 +2027,74 @@
     }, 1800);
   </script>
 
+  <script>
+    // ── Meta Pixel event tracking ──
+    function fbqTrack(event, params) {
+      if (typeof fbq === 'function') fbq('track', event, params);
+    }
+
+    // ViewContent — experience cards (Lancha, Catamaran, Velero)
+    var expNames = ['Lancha', 'Catamaran', 'Velero'];
+    document.querySelectorAll('.exp-card').forEach(function(card, i) {
+      card.addEventListener('click', function() {
+        fbqTrack('ViewContent', { content_name: expNames[i] || 'Experiencia' });
+      });
+    });
+
+    // ViewContent — destination cards
+    var destNames = ['Es Vedra', 'Ses Illetes', 'Mar Abierto'];
+    document.querySelectorAll('.dest-card').forEach(function(card, i) {
+      card.addEventListener('click', function() {
+        fbqTrack('ViewContent', { content_name: destNames[i] || 'Destino' });
+      });
+    });
+
+    // Lead — contact form submit
+    var form = document.getElementById('form');
+    if (form) {
+      form.addEventListener('submit', function() {
+        fbqTrack('Lead');
+      });
+    }
+
+    // Contact — WhatsApp flotante
+    var waBtn = document.getElementById('waBtn');
+    if (waBtn) {
+      waBtn.addEventListener('click', function() {
+        fbqTrack('Contact', { method: 'WhatsApp_flotante' });
+      });
+    }
+
+    // Contact — WhatsApp sección contacto
+    document.querySelectorAll('a[href^="https://wa.me"]').forEach(function(a) {
+      if (a.id !== 'waBtn') {
+        a.addEventListener('click', function() {
+          fbqTrack('Contact', { method: 'WhatsApp_contacto' });
+        });
+      }
+    });
+
+    // Contact — email
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function(a) {
+      a.addEventListener('click', function() {
+        fbqTrack('Contact', { method: 'Email' });
+      });
+    });
+
+    // Contact — nav Instagram
+    document.querySelectorAll('a[aria-label="Instagram"]').forEach(function(a) {
+      a.addEventListener('click', function() {
+        fbqTrack('Contact', { method: 'Instagram' });
+      });
+    });
+
+    // Contact — nav TikTok
+    document.querySelectorAll('a[aria-label="TikTok"]').forEach(function(a) {
+      a.addEventListener('click', function() {
+        fbqTrack('Contact', { method: 'TikTok' });
+      });
+    });
+  </script>
+
 </body>
 </html>
