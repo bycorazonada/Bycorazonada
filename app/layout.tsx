@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import PixelMailtoTracker from "@/components/PixelMailtoTracker";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,7 +23,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <PixelMailtoTracker />
+      </body>
       <Script id="meta-pixel" strategy="afterInteractive">{`
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
