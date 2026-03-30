@@ -2088,6 +2088,14 @@
       });
     });
 
+    // Contact — cualquier click en la sección Momentos reales (feed Elfsight)
+    var igSection = document.getElementById('instagram');
+    if (igSection) {
+      igSection.addEventListener('click', function() {
+        fbqTrack('Contact', { method: 'Instagram' });
+      });
+    }
+
     // Contact — nav TikTok
     document.querySelectorAll('a[aria-label="TikTok"]').forEach(function(a) {
       a.addEventListener('click', function() {
