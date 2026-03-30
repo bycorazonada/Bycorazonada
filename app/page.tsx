@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, memo } from "react";
 import { MorphingText } from "@/components/ui/morphing-text";
 import { FocusCards } from "@/components/ui/focus-cards";
+import { trackViewContent, trackLead, trackContact } from "@/lib/pixel";
 
 const HeroVideo = memo(function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
@@ -358,7 +359,7 @@ export default function ByCorazonadaPage() {
                 imgHover: "/images/sunset.JPG",
               },
             ] as const).map((exp, i) => (
-              <a key={i} href="#contacto" className="exp-card">
+              <a key={i} href="#contacto" className="exp-card" onClick={() => trackViewContent(exp.name)}>
                 <div className="exp-card__img-wrap">
                   <img className="exp-card__img exp-card__img--default" src={exp.img} alt="" loading="lazy" />
                   <img className="exp-card__img exp-card__img--hover" src={exp.imgHover} alt="" loading="lazy" />
@@ -394,7 +395,7 @@ export default function ByCorazonadaPage() {
         </div>
         <div className="gut">
           <div className="dest-grid fade" data-delay="1">
-            <a href="#contacto" className="dest-card">
+            <a href="#contacto" className="dest-card" onClick={() => trackViewContent("Es Vedrà")}>
               <img src="/images/colores.JPG" alt="Es Vedrà, Ibiza" loading="lazy" />
               <div className="dest-card__overlay"></div>
               <div className="dest-card__label">
@@ -404,7 +405,7 @@ export default function ByCorazonadaPage() {
                 <span className="dest-card__cta">{t["dest-cta"]}</span>
               </div>
             </a>
-            <a href="#contacto" className="dest-card">
+            <a href="#contacto" className="dest-card" onClick={() => trackViewContent("Ses Illetes")}>
               <img src="/images/formentera2.JPG" alt="Ses Illetes, Formentera" loading="lazy" style={{objectPosition: "center 75%"}} />
               <div className="dest-card__overlay"></div>
               <div className="dest-card__label">
@@ -414,7 +415,7 @@ export default function ByCorazonadaPage() {
                 <span className="dest-card__cta">{t["dest-cta"]}</span>
               </div>
             </a>
-            <a href="#contacto" className="dest-card">
+            <a href="#contacto" className="dest-card" onClick={() => trackViewContent("Mar Abierto")}>
               <img src="/images/delfines.JPG" alt="Cuevas de Saona, Formentera" loading="lazy" />
               <div className="dest-card__overlay"></div>
               <div className="dest-card__label">
@@ -506,14 +507,14 @@ export default function ByCorazonadaPage() {
                 data-delay="1"
                 dangerouslySetInnerHTML={{ __html: t["contact-prompt"] }}
               />
-              <a className="contact__email fade" data-delay="2" href="mailto:bycorazonada@gmail.com">
-                bycorazonada@gmail.com
+              <a className="contact__email fade" data-delay="2" href="mailto:reservas@bycorazonada.com" onClick={() => trackContact()}>
+                reservas@bycorazonada.com
               </a>
               <div className="contact__details fade" data-delay="2">
                 <div className="contact__detail">
                   <span className="contact__detail-l">WhatsApp</span>
                   <span className="contact__detail-v">
-                    <a href="https://wa.me/59898027809">+598 98027809</a>
+                    <a href="https://wa.me/59898027809" onClick={() => trackContact()}>+598 98027809</a>
                   </span>
                 </div>
                 <div className="contact__detail">
@@ -541,6 +542,7 @@ export default function ByCorazonadaPage() {
               onSubmit={(e) => {
                 e.preventDefault();
                 setFormSent(true);
+                trackLead();
               }}
             >
               <div className="form__two">
@@ -642,6 +644,7 @@ export default function ByCorazonadaPage() {
         target="_blank"
         rel="noopener"
         aria-label="Contactar por WhatsApp"
+        onClick={() => trackContact()}
       >
         <span className="wa__label">WhatsApp</span>
         <span className="wa__icon">
