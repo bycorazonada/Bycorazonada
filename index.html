@@ -199,7 +199,8 @@
   .nav__drawer.open .nav__drawer__item:nth-child(2) { animation-delay: 0.18s; }
   .nav__drawer.open .nav__drawer__item:nth-child(3) { animation-delay: 0.24s; }
   .nav__drawer.open .nav__drawer__item:nth-child(4) { animation-delay: 0.30s; }
-  .nav__drawer.open .nav__drawer__cta              { animation-delay: 0.38s; }
+  .nav__drawer.open .nav__drawer__item:nth-child(5) { animation-delay: 0.36s; }
+  .nav__drawer.open .nav__drawer__cta              { animation-delay: 0.44s; }
 
   @keyframes drawerFadeUp {
     from { opacity: 0; transform: translateY(14px); }
@@ -339,7 +340,7 @@
      └───────────────────────────────────────────────── */
   .about {
     padding: 0 0 64px;
-    background: var(--bg);
+    background: #ffffff;
   }
   .about__grid {
     display: grid;
@@ -812,7 +813,15 @@
      └───────────────────────────────────────────────── */
   .testimonials {
     padding: 64px 0;
-    background: var(--sand);
+    background: #ffffff;
+  }
+  .testimonials__intro { margin-bottom: 40px; }
+  .testimonials__headline {
+    font-family: var(--serif);
+    font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+    font-weight: 600; letter-spacing: -0.01em;
+    color: var(--navy); line-height: 1.0;
+    margin-top: 16px;
   }
   .testimonials__grid {
     display: grid;
@@ -821,7 +830,8 @@
     margin-top: 36px;
   }
   .testimonial-card {
-    background: var(--bg);
+    background: #ffffff;
+    border: 1px solid var(--rule);
     padding: 32px;
     position: relative;
     display: flex;
@@ -1191,6 +1201,7 @@
         <a href="#experiencias" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Experiencias</a>
         <a href="#destinos" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Dónde vamos</a>
         <a href="#instagram" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Momentos reales</a>
+        <a href="#testimonios" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Lo que dicen</a>
         <a href="#nosotros" class="nav__drawer__item" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Nosotros</a>
       </nav>
       <a href="#contacto" class="nav__drawer__cta" onclick="document.getElementById('drawer').classList.remove('open');document.body.style.overflow=''">Reservar</a>
@@ -1409,7 +1420,10 @@
   ═══════════════════════════════════════════ -->
   <section class="testimonials" id="testimonios">
     <div class="gut">
-      <p class="kicker fade">Lo que dicen</p>
+      <div class="testimonials__intro fade">
+        <p class="kicker">Lo que dicen</p>
+        <h2 class="testimonials__headline">Así lo vivieron ellos</h2>
+      </div>
       <div class="testimonials__grid">
 
         <div class="testimonial-card fade" data-delay="1">
@@ -1457,7 +1471,7 @@
           </div>
         </div>
 
-      </div>
+      </div><!-- end testimonials__grid -->
     </div>
   </section>
 
