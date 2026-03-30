@@ -16,8 +16,8 @@ export function trackLead() {
   }
 }
 
-export function trackContact() {
+export function trackContact(method: string) {
   if (typeof window !== "undefined" && window.fbq) {
-    window.fbq("track", "Contact");
+    window.fbq("track", "Contact", { method });
   }
 }

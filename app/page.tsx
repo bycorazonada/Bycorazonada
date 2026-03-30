@@ -271,14 +271,14 @@ export default function ByCorazonadaPage() {
         <a href="#contacto" className="nav__book">{t["nav-book"]}</a>
 
         <div className="nav__social" aria-label="Redes sociales">
-          <a href="https://www.instagram.com/corazonadasailing" target="_blank" rel="noopener" aria-label="Instagram">
+          <a href="https://www.instagram.com/corazonadasailing" target="_blank" rel="noopener" aria-label="Instagram" onClick={() => trackContact("Instagram")}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <rect x="2" y="2" width="20" height="20" rx="5"/>
               <circle cx="12" cy="12" r="4"/>
               <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
             </svg>
           </a>
-          <a href="https://www.tiktok.com/@corazonada.sailin" target="_blank" rel="noopener" aria-label="TikTok">
+          <a href="https://www.tiktok.com/@corazonada.sailin" target="_blank" rel="noopener" aria-label="TikTok" onClick={() => trackContact("TikTok")}>
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.75a8.28 8.28 0 0 0 4.84 1.53V6.84a4.85 4.85 0 0 1-1.07-.15z"/>
             </svg>
@@ -347,19 +347,22 @@ export default function ByCorazonadaPage() {
                 name: t["exp-1-name"], sub: t["exp-1-sub"], dur: t["exp-1-dur"],
                 img:      "/images/celeste.JPG",
                 imgHover: "/images/velero.jpeg",
+                pixelName: "Lancha",
               },
               {
                 name: t["exp-2-name"], sub: t["exp-2-sub"], dur: t["exp-2-dur"],
                 img:      "/images/Barco1.JPG",
                 imgHover: "/images/paraiso.jpeg",
+                pixelName: "Catamaran",
               },
               {
                 name: t["exp-3-name"], sub: t["exp-3-sub"], dur: t["exp-3-dur"],
                 img:      "/images/vela.jpeg",
                 imgHover: "/images/sunset.JPG",
+                pixelName: "Velero",
               },
             ] as const).map((exp, i) => (
-              <a key={i} href="#contacto" className="exp-card" onClick={() => trackViewContent(exp.name)}>
+              <a key={i} href="#contacto" className="exp-card" onClick={() => trackViewContent(exp.pixelName)}>
                 <div className="exp-card__img-wrap">
                   <img className="exp-card__img exp-card__img--default" src={exp.img} alt="" loading="lazy" />
                   <img className="exp-card__img exp-card__img--hover" src={exp.imgHover} alt="" loading="lazy" />
@@ -395,7 +398,7 @@ export default function ByCorazonadaPage() {
         </div>
         <div className="gut">
           <div className="dest-grid fade" data-delay="1">
-            <a href="#contacto" className="dest-card" onClick={() => trackViewContent("Es Vedrà")}>
+            <a href="#contacto" className="dest-card" onClick={() => trackViewContent("Es Vedra")}>
               <img src="/images/colores.JPG" alt="Es Vedrà, Ibiza" loading="lazy" />
               <div className="dest-card__overlay"></div>
               <div className="dest-card__label">
@@ -507,14 +510,14 @@ export default function ByCorazonadaPage() {
                 data-delay="1"
                 dangerouslySetInnerHTML={{ __html: t["contact-prompt"] }}
               />
-              <a className="contact__email fade" data-delay="2" href="mailto:reservas@bycorazonada.com" onClick={() => trackContact()}>
+              <a className="contact__email fade" data-delay="2" href="mailto:reservas@bycorazonada.com" onClick={() => trackContact("Email")}>
                 reservas@bycorazonada.com
               </a>
               <div className="contact__details fade" data-delay="2">
                 <div className="contact__detail">
                   <span className="contact__detail-l">WhatsApp</span>
                   <span className="contact__detail-v">
-                    <a href="https://wa.me/59898027809" onClick={() => trackContact()}>+598 98027809</a>
+                    <a href="https://wa.me/59898027809" onClick={() => trackContact("WhatsApp_contacto")}>+598 98027809</a>
                   </span>
                 </div>
                 <div className="contact__detail">
@@ -644,7 +647,7 @@ export default function ByCorazonadaPage() {
         target="_blank"
         rel="noopener"
         aria-label="Contactar por WhatsApp"
-        onClick={() => trackContact()}
+        onClick={() => trackContact("WhatsApp_flotante")}
       >
         <span className="wa__label">WhatsApp</span>
         <span className="wa__icon">
