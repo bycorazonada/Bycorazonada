@@ -2081,8 +2081,8 @@
       });
     });
 
-    // Contact — nav Instagram
-    document.querySelectorAll('a[aria-label="Instagram"]').forEach(function(a) {
+    // Contact — todos los links de Instagram (nav, handle, sección contacto)
+    document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a) {
       a.addEventListener('click', function() {
         fbqTrack('Contact', { method: 'Instagram' });
       });

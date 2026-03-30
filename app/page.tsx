@@ -451,6 +451,7 @@ export default function ByCorazonadaPage() {
               href="https://www.instagram.com/corazonadasailing/"
               target="_blank"
               rel="noopener"
+              onClick={() => trackContact("Instagram")}
             >@corazonadasailing →</a>
           </div>
           <div className="elfsight-app-2f3717f5-ea02-4bcc-9619-9be8dbd50fd0" data-elfsight-app-lazy></div>
@@ -523,7 +524,7 @@ export default function ByCorazonadaPage() {
                 <div className="contact__detail">
                   <span className="contact__detail-l">Instagram</span>
                   <span className="contact__detail-v">
-                    <a href="https://www.instagram.com/corazonadasailing/" target="_blank" rel="noopener">@corazonadasailing</a>
+                    <a href="https://www.instagram.com/corazonadasailing/" target="_blank" rel="noopener" onClick={() => trackContact("Instagram")}>@corazonadasailing</a>
                   </span>
                 </div>
                 <div className="contact__detail">
