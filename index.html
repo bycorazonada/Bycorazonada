@@ -22,20 +22,6 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1256772936631649');
   fbq('track', 'PageView');
-  // Block Subscribe/SubscribedButton events fired by third-party widgets (Elfsight)
-  (function() {
-    var _fbq = window.fbq;
-    window.fbq = function() {
-      var args = Array.prototype.slice.call(arguments);
-      if (args[1] === 'Subscribe' || args[1] === 'SubscribedButton') return;
-      return _fbq.apply(this, args);
-    };
-    window.fbq.callMethod = _fbq.callMethod;
-    window.fbq.queue = _fbq.queue;
-    window.fbq.push = _fbq.push;
-    window.fbq.loaded = _fbq.loaded;
-    window.fbq.version = _fbq.version;
-  }());
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1256772936631649&ev=PageView&noscript=1"
